@@ -3,8 +3,6 @@ from flask import Flask
 from flask import request
 import datetime
 from flask import render_template
-import os
-import csv
 import requests
 import json
 
