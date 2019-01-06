@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='shuji.css') }}">
+    <meta name="referrer" content="no-referrer"/>
+</head>
+
+<body>
+
+<div id="db-nav-book" class="nav">
+    <div class="nav-search">
+        <img src="{{ url_for('static', filename='img/timg.png') }}">
+        <div>
+        <div class="logo">安托书籍</div>
+        <form action="/shuji" method="post">
+            <div class="inp"><input id="inp-query" name="name" size="22" maxlength="60" placeholder="书名、作者、ISBN" value="" autocomplete="off"></div>
+            <div class="inp-btn"><input type="submit" value="搜索"></div>
+            <input type="hidden" name="cat" value="1001">
+        </form>
+        </div>
+    </div>
+</div>
+
+<div class="tuijian">
+    <a>推荐书籍</a>
+    <ul class="list-col">
+        <li class="">
+            <div class="cover">
+                <a href="https://book.douban.com/subject/30197648/?icn=index-editionrecommend" title="时间杀手">
+                    <img src="https://img3.doubanio.com/view/subject/m/public/s29909506.jpg" class="" width="115px" height="172px" alt="时间杀手">
+                </a>
+            </div>
+            <div class="info">
+                <div class="title">
+                    <a class="" href="https://book.douban.com/subject/30197648/?icn=index-editionrecommend" title="时间杀手">时间杀手</a>
+                </div>
+                <div class="author">
+                    [法]米歇尔·普西
+                </div>
+            </div>
+        </li>
+
+
+        <li class="">
+            <div class="cover">
+                <a href="https://book.douban.com/subject/30317420/?icn=index-editionrecommend" title="盛夏方程式">
+                    <img src="https://img3.doubanio.com/view/subject/m/public/s29917283.jpg" class="" width="115px" height="172px" alt="盛夏方程式">
+                </a>
+            </div>
+
+            <div class="info">
+                <div class="title">
+                    <a class="" href="https://book.douban.com/subject/30317420/?icn=index-editionrecommend" title="盛夏方程式">盛夏方程式</a>
+                </div>
+                <div class="author">
+                    [日]东野圭吾
+                </div>
+            </div>
+        </li>
+
+
+        <li class="">
+            <div class="cover">
+                <a href="https://book.douban.com/subject/30359490/?icn=index-editionrecommend" title="裸眼观星">
+                    <img src="https://img1.doubanio.com/view/subject/m/public/s29903419.jpg" class="" width="115px" height="172px" alt="裸眼观星">
+                </a>
+            </div>
+            <div class="info">
+                <div class="title">
+                    <a class="" href="https://book.douban.com/subject/30359490/?icn=index-editionrecommend" title="裸眼观星">裸眼观星</a>
+                </div>
+                <div class="author">
+                    [美]鲍勃•金
+                </div>
+            </div>
+        </li>
+
+        <li class="">
+            <div class="cover">
+                <a href="https://book.douban.com/subject/30354245/?icn=index-editionrecommend" title="注定一战">
+                    <img src="https://img1.doubanio.com/view/subject/m/public/s29931918.jpg" class="" width="115px" height="172px" alt="注定一战">
+                </a>
+            </div>
+
+            <div class="info">
+                <div class="title">
+                    <a class="" href="https://book.douban.com/subject/30354245/?icn=index-editionrecommend" title="注定一战">注定一战</a>
+                </div>
+                <div class="author">
+                    (美) 格雷厄姆·艾利森 (Graham Allison)
+                </div>
+            </div>
+        </li>
+    </ul>
+
+</div>
+
+<div class="result">
+
+    <h3>搜索结果:</h3>
+    {% if chaxun_list == [] %}
+        <div>
+            没有找到相关的书籍，换个搜索词试试吧。
+        </div>
+        {% endif %}
+        {% if chaxun_list != [] %}
+        {% for item in chaxun_list %}
+        <div class="rescon">
+            <img src={{item['img']}} class="cover">
+            <div class="detail">
+                <div class="title">
+                    <a class="title-text">{{item['title']}}</a>
+                </div>
+                <div class="rating sc-bwzfXH hxNRHc">
+                    <span class="rating_nums">{{item['rating']}}</span>
+                    <span class="pl">({{item['ratingCount']}})</span>
+                </div>
+                <div class="abstract">作者: {% for i in item['writers'] %}{% for j in i %}{{j['name']}}/{% endfor %}{% endfor %}</div>
+                <div class="abstract">出版社: {{item['publishOrg']}}</div>
+                <div class="abstract">页数: {{item['pageNum']}}</div>
+                <div class="abstract">出版年: {{item['pressDate']}}</div>
+                <div class="abstract">定价: {{item['price']}}</div>
+            </div>
+              </div>
+        {% endfor %}
+        {% endif %}
+
+</div>
+
+</body>
+
+</html>

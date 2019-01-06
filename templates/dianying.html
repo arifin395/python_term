@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>电影</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dianying.css') }}" charset="utf-8">
+
+</head>
+
+<body>
+
+<div class="main">
+    <div class="title">
+        <img src="{{ url_for('static', filename='img/logo.jpg') }}">
+        <h4>阿芬电影网</h4>
+    </div>
+
+    <div class="search" style="background:url('{{ url_for('static', filename='img/bgs.jpg') }}'); width: 100%; height: 500px; no-repeat">
+        <form id="chaxun" action="/dianying" method="post">
+        <input  id="name" type="text" name="name" placeholder="请输入您要查询的电影"/>
+        <input type="image" id="submit_btn" src="{{ url_for('static', filename='img/search.jpg') }}" style="width: 46px;height: 46px;"/>
+        <!--<img  src="{{ url_for('static', filename='img/search.jpg') }}">-->
+        </form>
+
+    </div>
+
+</div>
+
+<div class="result">
+    查询结果：
+</div>
+<div>
+    <div>
+        {% if chaxun_list == [] %}
+        <div>
+            没有找到相关的电影，换个搜索词试试吧。
+        </div>
+        {% endif %}
+        {% if chaxun_list != [] %}
+        {% for item in chaxun_list %}
+        <div class="rescon">
+
+            <img src={{item['img']}} class="cover">
+            <div class="detail">
+                <div class="title">
+                    <a class="title-text">{{item['title']}}</a>
+                </div>
+                <div class="rating sc-bwzfXH hxNRHc">
+                    <span class="rating_nums">{{item['rating']}}</span>
+                    <span class="pl">({{item['ratingCount']}})</span>
+                </div>
+                <div class="abstract">导演: {% for i in item['directors'] %}{% for j in i %}{{j['name']}}/{% endfor %}{% endfor %}</div>
+                <div class="abstract">演员: {% for i in item['actors'] %}{% for j in i %}{{j['name']}}/{% endfor %}{% endfor %}</div>
+                <div class="abstract">制片国家/地区: {% for i in item['countries'] %}{% for j in i %}{{j}}/{% endfor %}{% endfor %}</div>
+                <div class="abstract">标签: {% for i in item['tags'] %}{% for j in i %}{{j}}/{% endfor %}{% endfor %}</div>
+                <div class="abstract">片长: {{item['durationMin']}}分钟</div>
+                <div class="abstract">上映日期: {% for i in item['releaseDates'] %}{% for j in i %}{{j}}/{% endfor %}{% endfor %}</div>
+            </div>
+              </div>
+        {% endfor %}
+        {% endif %}
+
+    </div>
+</div>
+</body>
+</html>
